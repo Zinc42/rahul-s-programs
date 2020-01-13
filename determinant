@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.*;
-public class buckets{
+public class determinant{
   public static void main (String [] args) throws IOException{
       int row =5;
       int col = 5;
