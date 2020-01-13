@@ -1,0 +1,61 @@
+import java.io.*;
+import java.util.*;
+public class buckets{
+  public static void main (String [] args) throws IOException{
+      int row =5;
+      int col = 5;
+     
+     BufferedReader f = new BufferedReader(new InputStreamReader(System.in));
+    // Use StringTokenizer vs. readLine/split -- lots faster
+    List<String> myList = new ArrayList<String>();
+    String line;
+    while ((line = f.readLine()) != null) {
+        //StringTokenizer st = new StringTokenizer(line);
+        myList.add(line);
+    }
+    String[] blankList = new String[row];
+    for(int i=0;i<row;i++){
+      blankList[i]=myList.get(i).replace("","");
+    }
+    //extablish matrix
+    int[][] matrix = new int[row][col];
+    for(int i=0;i<row;i++){
+      StringTokenizer mn = new StringTokenizer(blankList[i]);
+      for(int j=0;j<col;j++){
+        matrix[i][j]=(Integer.parseInt(mn.nextToken()));
+      }
+    }
+    System.out.println("Determinant: "+dp(matrix));
+
+    }
+    public static int dp(int[][] matrix){
+        int determinant =0;
+        for (int i=0; i<matrix.length;i++){
+            if(matrix.length!=2){
+                int[][] temp1 = new int[matrix.length-1][matrix.length-1];
+               
+                for(int q=0; q<matrix.length-1;q++){
+                    for(int w=0; w<matrix.length-1;w++){
+                        if(w>=i){
+                            temp1[q][w]=matrix[q+1][w+1];
+                        }
+                        else{
+                            temp1[q][w]=matrix[q+1][w];
+                        }
+                    }
+                }
+               if(i%2==1){
+                determinant+=(matrix[0][i]*dp(temp1));
+               }else{
+                   determinant-=(matrix[0][i]*dp(temp1));
+               }
+            }
+            else{
+                determinant = matrix[0][0]*matrix[1][1]-matrix[0][1]*matrix[1][0];
+                System.out.println("2x2 subs: "+determinant);
+                return determinant;
+            }
+        }
+        return -determinant; 
+    }
+ }
